@@ -1,4 +1,4 @@
-name: Appium Tests
+name: Install Dependencies
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +18,12 @@ jobs:
         with:
           node-version: 14
 
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
       - name: Install dependencies
-        run: npm install
-      - name: Install Appium
-        run: npm install appium
-      
-      - name: Run Appium tests
-        run: npm test
-        
+        run: |
+          npm ci
+          pip install -r requirements.txt
